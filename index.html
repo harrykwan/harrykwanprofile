@@ -262,7 +262,7 @@ Author URL: http://w3layouts.com
       font-weight: 100;
       font-size: 0.9em;
       min-width: 120px;
-      font-family: 'Dosis', sans-serif;
+      font-family: 'Saira', sans-serif;
 
     }
 
@@ -302,7 +302,7 @@ Author URL: http://w3layouts.com
   <div class="w3l-header" id="home">
     <div class="container">
       <nav class="navbar navbar-expand-lg navbar-dark pl-0 pr-0">
-        <a class="navbar-brand m-0 text-primary" href="index.html" style="font-family: 'Dosis', sans-serif;">
+        <a class="navbar-brand m-0 text-primary" href="index.html" style="font-family: 'Saira', sans-serif;">
           <div style="margin-top: 10px;">
             <svg height="75" width="331" class="mysvglogo" style="">
               <defs id="SvgjsDefs1001"></defs>
@@ -339,7 +339,7 @@ Author URL: http://w3layouts.com
                   class="sr-only">(current)</span></a>
             </li>
             <li class="nav-item mr-lg-4">
-              <a class="nav-link pl-0 pr-0 font-weight-bold" href="#about">About</a>
+              <a class="nav-link pl-0 pr-0 font-weight-bold" onclick="closebar()" href="index.html#about">About</a>
             </li>
             <li class="nav-item mr-lg-4">
               <a class="nav-link pl-0 pr-0 font-weight-bold" href="services.html">Projects</a>
@@ -825,7 +825,7 @@ Author URL: http://w3layouts.com
         cssClass: 'ms--titles',
         range: [0, 3],
         rangeContent: function (i) {
-          return '<h3 style=\"font-family: Dosis, sans-serif;\">' + titles[i] + '</h3>';
+          return '<h3 style=\"font-weight: 400; font-family: Saira, sans-serif;\">' + titles[i] + '</h3>';
         },
         vertical: true,
         reverse: true,
@@ -917,6 +917,11 @@ Author URL: http://w3layouts.com
         $('body').toggleClass('noscroll');
       })
     });
+
+    function closebar() {
+      if (document.body.classList.contains('noscroll'))
+        document.getElementsByClassName('navbar-toggler')[0].click()
+    }
   </script>
   <!-- disable body scroll which navbar is in active -->
 
