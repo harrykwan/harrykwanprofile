@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Harry Kwan — Tech Portfolio</title>
+<meta name="description" content="Harry Kwan (關誌諾) — Hong Kong artist-engineer. Interactive visualizations, gesture instruments, AI audio tools and live performance systems.">
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+:root {
+  --bg: #0b0a0d; --ink: #e6e1d6; --muted: #78727c;
+  --accent: #c2263e; --line: rgba(230,225,214,0.1);
+}
+html { scroll-behavior: smooth; }
+body { background: var(--bg); color: var(--ink); font-family: -apple-system, "Helvetica Neue", "PingFang HK", sans-serif; line-height: 1.65; -webkit-font-smoothing: antialiased; }
+.wrap { max-width: 1080px; margin: 0 auto; padding: 0 32px; }
+
+/* header — poster hero */
+header { position: relative; padding: 170px 0 110px; border-bottom: 1px solid var(--line); overflow: hidden; }
+.hero-bg { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center 28%; filter: saturate(0.85) brightness(0.75); }
+header::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(11,10,13,0.30) 0%, rgba(11,10,13,0.62) 55%, #0b0a0d 100%); pointer-events: none; }
+header .wrap { position: relative; z-index: 1; }
+.kicker { font-size: 0.72rem; letter-spacing: 4px; text-transform: uppercase; color: var(--accent); margin-bottom: 18px; }
+h1 { font-size: clamp(2.4rem, 5.5vw, 4rem); font-weight: 700; letter-spacing: -0.02em; line-height: 1.05; }
+h1 em { font-style: normal; color: var(--accent); }
+.sub { color: var(--muted); font-size: 1.05rem; max-width: 620px; margin-top: 22px; }
+.sub b { color: var(--ink); font-weight: 500; }
+
+
+/* topnav (links back to main site) */
+.topnav { position: sticky; top: 0; z-index: 10; background: rgba(11,10,13,0.85); backdrop-filter: blur(14px); border-bottom: 1px solid var(--line); }
+.topnav .wrap { display: flex; justify-content: space-between; align-items: center; padding-top: 14px; padding-bottom: 14px; }
+.topnav .logo { color: var(--ink); text-decoration: none; font-weight: 700; letter-spacing: -0.01em; }
+.topnav .logo b { color: var(--accent); }
+.topnav ul { list-style: none; display: flex; gap: 26px; }
+.topnav a.navlink { color: var(--muted); text-decoration: none; font-size: 0.72rem; letter-spacing: 2px; text-transform: uppercase; }
+.topnav a.navlink:hover, .topnav a.navlink.active { color: var(--ink); }
+
+/* work timeline */
+.xp { border-top: 1px solid var(--line); }
+.xp-row { display: grid; grid-template-columns: 160px 1fr; gap: 28px; padding: 26px 0; border-bottom: 1px solid var(--line); }
+.xp-year { font-size: 0.75rem; letter-spacing: 2px; color: var(--accent); padding-top: 4px; }
+.xp-role { font-weight: 600; font-size: 1rem; }
+.xp-org { color: var(--muted); font-size: 0.85rem; margin: 2px 0 8px; }
+.xp-desc { font-size: 0.88rem; color: var(--muted); }
+.xp-tags { margin-top: 10px; display: flex; flex-wrap: wrap; gap: 6px; }
+.xp-tag { font-size: 0.68rem; letter-spacing: 1px; border: 1px solid var(--line); color: var(--muted); padding: 3px 8px; border-radius: 999px; }
+@media (max-width: 700px) { .xp-row { grid-template-columns: 1fr; gap: 6px; } }
+
+/* toolbox */
+.skills { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+.skill-card { border: 1px solid var(--line); padding: 22px; }
+.skill-card h3 { font-size: 0.8rem; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 10px; }
+.skill-card p { font-size: 0.85rem; color: var(--muted); }
+@media (max-width: 760px) { .skills { grid-template-columns: 1fr; } }
+
+/* sections */
+section { padding: 80px 0; border-bottom: 1px solid var(--line); }
+.label { font-size: 0.7rem; letter-spacing: 3px; text-transform: uppercase; color: var(--muted); margin-bottom: 10px; }
+h2 { font-size: 1.8rem; font-weight: 700; letter-spacing: -0.01em; margin-bottom: 36px; }
+
+/* project cards */
+.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 18px; }
+.card { border: 1px solid var(--line); border-radius: 14px; padding: 26px; transition: border-color 0.25s; }
+.card:hover { border-color: rgba(230,225,214,0.3); }
+.card .num { font-size: 0.65rem; color: var(--accent); letter-spacing: 2px; margin-bottom: 10px; }
+.card h3 { font-size: 1.1rem; font-weight: 600; margin-bottom: 6px; }
+.card p { font-size: 0.9rem; color: var(--muted); margin-bottom: 12px; }
+.meta { display: flex; flex-wrap: wrap; gap: 6px; }
+.meta span { font-size: 0.65rem; padding: 3px 10px; border-radius: 20px; border: 1px solid var(--line); color: var(--muted); }
+.links { margin-top: 12px; display: flex; gap: 14px; }
+.links a { color: var(--ink); font-size: 0.78rem; text-decoration: none; border-bottom: 1px solid var(--accent); padding-bottom: 1px; }
+.links a:hover { color: var(--accent); }
+
+/* timeline arc */
+.arc { border-left: 1px solid var(--line); margin-left: 6px; padding-left: 28px; }
+.arc-item { position: relative; padding-bottom: 26px; }
+.arc-item::before { content: ''; position: absolute; left: -32px; top: 7px; width: 9px; height: 9px; border-radius: 50%; background: var(--bg); border: 2px solid var(--accent); }
+.arc-year { font-size: 0.72rem; color: var(--accent); letter-spacing: 2px; margin-bottom: 3px; }
+.arc-item h3 { font-size: 1.05rem; font-weight: 600; }
+.arc-item p { font-size: 0.88rem; color: var(--muted); margin-top: 3px; }
+
+/* dual practice */
+.dual { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; }
+.dual h3 { font-size: 0.78rem; letter-spacing: 3px; text-transform: uppercase; color: var(--accent); margin-bottom: 12px; }
+.dual ul { list-style: none; }
+.dual li { font-size: 0.88rem; color: var(--muted); padding: 7px 0; border-bottom: 1px solid var(--line); }
+.dual li b { color: var(--ink); font-weight: 500; }
+
+footer { padding: 50px 0 60px; color: var(--muted); font-size: 0.75rem; letter-spacing: 2px; }
+footer .wrap { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px; }
+footer a { color: var(--muted); text-decoration: none; }
+footer a:hover { color: var(--ink); }
+
+@media (max-width: 760px) { .dual { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+<nav class="topnav">
+  <div class="wrap">
+    <a class="logo" href="/">harry<b>kwan</b><span style="color:var(--muted);font-weight:400"> / tech</span></a>
+    <ul>
+      <li><a class="navlink" href="/">Main</a></li>
+      <li><a class="navlink" href="/#experience">Experience</a></li>
+      <li><a class="navlink" href="/#skills">Skills</a></li>
+      <li><a class="navlink" href="/#contact">Contact</a></li>
+    </ul>
+  </div>
+</nav>
+
+<header>
+  <img class="hero-bg" src="../harry-portrait.jpg" alt="" aria-hidden="true">
+  <div class="wrap">
+    <div class="kicker">Art × Technology — Hong Kong</div>
+    <h1>Making machines<br><em>hear, feel and move</em>.</h1>
+    <p class="sub">I'm <b>Harry Kwan 關誌諾</b> — a singer-songwriter/producer and software engineer of 10+ years. My practice lives where sound meets code: gesture-controlled instruments, AI that listens to chords, interactive ecosystems, and tools built for my own stage and studio — then released to the world.</p>
+
+  </div>
+</header>
+
+<!-- INTERACTIVE WORKS -->
+<section>
+  <div class="wrap">
+    <div class="label">01 — Interactive Systems</div>
+    <h2>Living visualizations</h2>
+    <div class="grid">
+      <div class="card">
+        <div class="num">2026 — WEB AUDIO + CANVAS</div>
+        <h3>Chladni Plate Cymatics</h3>
+        <p>Sound made visible — interactive simulation of Chladni plate resonance patterns, where sand-like particles organise into geometric figures driven by live frequency input.</p>
+        <div class="meta"><span>Web Audio API</span><span>Canvas</span><span>Physics sim</span></div>
+        <div class="links"><a href="https://harrykwan.github.io/art-tech/">View live →</a></div>
+      </div>
+      <div class="card">
+        <div class="num">2026 — BIOFEEDBACK VISUAL</div>
+        <h3>The Associative Engine: Plant Pulse</h3>
+        <p>Living-plant bioelectric signals translated into generative light and motion — an ecosystem that breathes with its biological sensors.</p>
+        <div class="meta"><span>Generative art</span><span>Sensor data</span><span>Real-time</span></div>
+        <div class="links"><a href="https://harrykwan.github.io/art-tech/index2.html">View live →</a></div>
+      </div>
+      <div class="card">
+        <div class="num">2026 — GENERATIVE ECOSYSTEM</div>
+        <h3>Interspecies Game of Life</h3>
+        <p>Conway's cellular automata reimagined as an interspecies ecosystem — evolving, competing, cooperating populations rendered as a living canvas.</p>
+        <div class="meta"><span>Cellular automata</span><span>Simulation</span><span>Canvas</span></div>
+        <div class="links"><a href="https://harrykwan.github.io/art-tech/index3.html">View live →</a></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- INSTRUMENTS & TOOLS -->
+<section>
+  <div class="wrap">
+    <div class="label">02 — Instruments & Tools</div>
+    <h2>Technology for making music</h2>
+    <div class="grid">
+      <div class="card">
+        <div class="num">2025 — VISION + MIDI</div>
+        <h3>HandMIDI — Body as Instrument</h3>
+        <p>Webcam hand and face tracking mapped to MIDI: pinch, spread, tilt and height become reverb, filter, pan and delay. A touchless instrument for live performance and accessible music-making.</p>
+        <div class="meta"><span>Apple Vision</span><span>MediaPipe</span><span>CoreMIDI</span><span>macOS + browser</span></div>
+        <div class="links"><a href="https://handmidi.vercel.app">Try live →</a> <a href="https://github.com/harrykwan/HandMIDI-mac">Code →</a></div>
+      </div>
+      <div class="card">
+        <div class="num">2024–25 — AI LEARNING PLATFORM</div>
+        <h3>RootNotes</h3>
+        <p>Music theory and ear-training app with a built-in AI tutor — structured curriculum from intervals to jazz harmony, live on the App Store.</p>
+        <div class="meta"><span>Swift</span><span>iOS/macOS</span><span>AI tutor</span></div>
+        <div class="links"><a href="https://rootnotesapp.com">Website →</a></div>
+      </div>
+      <div class="card">
+        <div class="num">2026 — PRO AUDIO DSP</div>
+        <h3>Vocal Multipressor & GainRider</h3>
+        <p>Native AU/VST3 plugins grown from my vocal production workflow: intelligent multi-band compression and automatic gain-riding, built in Xcode and JUCE.</p>
+        <div class="meta"><span>AudioUnit</span><span>VST3</span><span>JUCE / C++</span></div>
+        <div class="links"><a href="https://github.com/harrykwan/vocal-multipressor-plugin">Code →</a></div>
+      </div>
+      <div class="card">
+        <div class="num">2026 — AI FILM TOOLS</div>
+        <h3>LyricCut</h3>
+        <p>Native macOS tool for music-video makers: sync lyrics to footage, AI-assisted clip tagging and timeline assembly. Whisper timing + LLM tagging.</p>
+        <div class="meta"><span>Swift</span><span>Whisper</span><span>LLM</span><span>macOS</span></div>
+        <div class="links"><a href="https://github.com/harrykwan/LyricCut">Code →</a></div>
+      </div>
+      <div class="card">
+        <div class="num">2026 — GENERATIVE SOUND</div>
+        <h3>Serum AI</h3>
+        <p>AI-generated synthesizer presets — describe a sound in words, a reasoning LLM designs the patch, download a playable .SerumPreset for Serum 2. Binary preset format reverse-engineered from scratch.</p>
+        <div class="meta"><span>DeepSeek R1</span><span>Serum 2 format</span><span>Web</span></div>
+        <div class="links"><a href="https://serum-ai.vercel.app">Try live →</a></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- THE ARC -->
+<section>
+  <div class="wrap">
+    <div class="label">03 — One Idea, Six Years</div>
+    <h2>Teaching machines to hear chords</h2>
+    <div class="arc">
+      <div class="arc-item">
+        <div class="arc-year">2020 — 2021</div>
+        <h3>CUHK Final Year Project — fypbuskking</h3>
+        <p>Browser listens to live audio via mic, classifies the chord with a KNN model trained on spectral features (ml5.js — an image-classification pipeline applied to audio), and auto-scrolls the chord sheet to the right bar.</p>
+      </div>
+      <div class="arc-item">
+        <div class="arc-year">2022</div>
+        <h3>Buskking — production rewrite</h3>
+        <p>Nuxt + serverless + headless-Chrome scraper. Key detection, auto-scroll, chord search for performing songwriters.</p>
+      </div>
+      <div class="arc-item">
+        <div class="arc-year">2026</div>
+        <h3>ChordMac / chord-server</h3>
+        <p>Real-time chord detection as a native macOS app and a Dockerized service.</p>
+      </div>
+      <div class="arc-item">
+        <div class="arc-year">2024 — NOW</div>
+        <h3>RootNotes — the full platform</h3>
+        <p>The idea matured into a complete ear-training and theory platform: now the machine doesn't just hear — it teaches.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- WORK TIMELINE -->
+<section>
+  <div class="wrap">
+    <div class="label">04 — Work Timeline</div>
+    <h2>Six years of<br>shipping.</h2>
+    <div class="xp">
+      <div class="xp-row"><div class="xp-year">2025 — NOW</div><div>
+        <div class="xp-role">Co-founder / Lead Engineer</div>
+        <div class="xp-org">Goach AI Limited — Hong Kong Science Park</div>
+        <p class="xp-desc">AI + computer vision platform for rehabilitation treatment. Posture analysis, real-time motion tracking, personalised treatment plans. Multi-region deployment across HK and UK.</p>
+        <div class="xp-tags"><span class="xp-tag">TypeScript</span><span class="xp-tag">Next.js</span><span class="xp-tag">AWS</span><span class="xp-tag">MongoDB</span><span class="xp-tag">MediaPipe</span></div>
+      </div></div>
+      <div class="xp-row"><div class="xp-year">2023 — 2025</div><div>
+        <div class="xp-role">Project Manager / Engineer</div>
+        <div class="xp-org">TrailMe & WayMe — WayMe Outdoor Limited</div>
+        <p class="xp-desc">Managed outsourced teams in Vietnam & HK. Built TrailGuard+ — CSDI open-data platform integrating MongoDB, AWS Lambda and Mapbox for GPS trail safety apps.</p>
+        <div class="xp-tags"><span class="xp-tag">Serverless</span><span class="xp-tag">MongoDB</span><span class="xp-tag">Mapbox</span><span class="xp-tag">Team Management</span></div>
+      </div></div>
+      <div class="xp-row"><div class="xp-year">2022</div><div>
+        <div class="xp-role">Co-founder — Recoroad · RA — HKU</div>
+        <div class="xp-org">Recoroad · University of Hong Kong (Business & Economics)</div>
+        <p class="xp-desc">AWS serverless architecture with MongoDB; video chatbot system for training medical students.</p>
+      </div></div>
+      <div class="xp-row"><div class="xp-year">2021 — 2022</div><div>
+        <div class="xp-role">Founder / Developer</div>
+        <div class="xp-org">Venbot · The Port (Cyberport Tech300) · We Wanna Learn · InitSoc</div>
+        <p class="xp-desc">CRM + automation; NFT + AR platform; online course platforms, scraping and automation systems.</p>
+      </div></div>
+      <div class="xp-row"><div class="xp-year">2019 — 2021</div><div>
+        <div class="xp-role">Freelance Developer</div>
+        <div class="xp-org">CUHK PEU · CUHK SU · New Asia College · CityU</div>
+        <p class="xp-desc">Timetable matching system, society registration platform, college website, educational mobile apps.</p>
+      </div></div>
+      <div class="xp-row"><div class="xp-year">2016 — 2019</div><div>
+        <div class="xp-role">Early Roles</div>
+        <p class="xp-desc">Aigniter / Jarvis Pay (hybrid mobile) · Oursky (CI/CD) · GlobalActive (backend dashboard, MicroBit smart-city materials).</p>
+      </div></div>
+    </div>
+  </div>
+</section>
+
+<!-- TOOLBOX -->
+<section>
+  <div class="wrap">
+    <div class="label">05 — The Toolbox</div>
+    <h2>What I build with.</h2>
+    <div class="skills">
+      <div class="skill-card"><h3>Languages</h3><p>JavaScript / TypeScript · Python · Swift · HTML / CSS · Java · PHP · Bash</p></div>
+      <div class="skill-card"><h3>Frameworks</h3><p>Node.js · Express · Vue.js (Nuxt) · React (Next.js) · Capacitor · Flutter</p></div>
+      <div class="skill-card"><h3>Cloud · AWS</h3><p>Lambda · API Gateway · EC2 · S3 · DynamoDB · Serverless Framework</p></div>
+      <div class="skill-card"><h3>Databases</h3><p>MongoDB · MySQL · DynamoDB · Firebase Firestore</p></div>
+      <div class="skill-card"><h3>ML / AI</h3><p>Computer vision · OpenCV · MediaPipe · ml5.js · Python ML pipelines · LLM integration</p></div>
+      <div class="skill-card"><h3>DevOps · APIs</h3><p>Docker · Git · CI/CD · GitHub Actions · Mapbox · Stripe · Google Workspace</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- DUAL PRACTICE -->
+<section>
+  <div class="wrap">
+    <div class="label">06 — Dual Practice</div>
+    <h2>Two careers, one practitioner</h2>
+    <div class="dual">
+      <div>
+        <h3>Music</h3>
+        <ul>
+          <li><b>陳柏宇 Jason Chan《一天》</b> — Composer, 2025</li>
+          <li><b>林奕匡 Phil Lam《無題時想起的人》</b> — Composer, 2025</li>
+          <li><b>JC 陳詠桐《溺愛》</b> — Composer & Arranger, 2026</li>
+          <li><b>KKBOX 風雲榜</b> — Arrangement & Live BV, 2026</li>
+          <li><b>林憶蓮 Sandy Lam Concert — Kai Tak</b> — Backing Vocal Band, 2026</li>
+          <li><b>姜濤 / Anson Lo / Edan</b> — BV, programming, recording, 2024–25</li>
+          <li><b>全民造星 6 (ViuTV)</b> — Top 30 Finalist, 2025</li>
+          <li><b>Edward Chan (EMP) team</b> — songwriter/producer</li>
+        </ul>
+      </div>
+      <div>
+        <h3>Technology</h3>
+        <ul>
+          <li><b>Goach AI Limited</b> — Co-founder/Lead Engineer, AI computer-vision rehabilitation platform, 2025–now</li>
+          <li><b>WayMe Outdoor (TrailMe)</b> — PM/Engineer, open-data geo platform, 2023–25</li>
+          <li><b>Cyberport Tech300 — The Port</b> — Founder, NFT+AR platform, 2021–22</li>
+          <li><b>CUHK & CityU</b> — commissioned systems, 2019–21</li>
+          <li><b>10+ years</b> full-stack: Swift, TypeScript, Python, JUCE/C++, ML (OpenCV, MediaPipe, ml5)</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <span>HARRY KWAN 關誌諾</span>
+    <span><a href="mailto:hkclmusic@gmail.com">HKCLMUSIC@GMAIL.COM</a> · <a href="https://kclmusic.com">KCLMUSIC.COM</a></span>
+  </div>
+</footer>
+
+</body>
+</html>
